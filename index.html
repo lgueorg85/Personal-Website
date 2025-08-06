@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <title>Leonardo Gonzalez | Portfolio</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="icon" href="favicon.ico" />
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>Leonardo Gonzalez</h1>
+                <nav>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href ="#resume">Resume</a>
+                    <a href="#contact">Contact</a>
+                </nav>  
+            </div>
+        </header>
+
+        <main>
+        <section id="about">
+        <h2>About Me</h2>
+        <div class="about-flex">
+            <img src="images/Profile-Image.jpg" alt="Leonardo Gonzalez" class="about-img" />
+
+            <div class="about-text">
+                    <p>
+                    I am <strong>Leonardo Gonzalez</strong>, a May&nbsp;2025 graduate of the
+                    <em>University of Illinois at Urbana-Champaign</em> with a Bachelor of Science
+                    in Computer Engineering and a minor in Philosophy. My technical
+                    expertise spans C/C++, SystemVerilog, x86 assembly, Python, and Java,
+                    enabling me to tackle challenges from low-level hardware design to
+                    high-level software architecture.
+                    </p>
+                    
+                    <p>
+                    I’ll return to Boeing Test & Evaluation as a full-time Product Security
+                    Engineer at the end of 2025, deepening my focus on secure product
+                    development. Until then, I’m sharpening my full-stack web-dev skills,
+                    building projects that blend thoughtful design with a security-first
+                    backend.
+                    </p>
+                    
+                    <p>
+                    This mix of creative front-end work and hard-won cybersecurity
+                    experience lets me craft robust, user-friendly platforms while staying
+                    on the cutting edge of modern web tooling.
+                    </p>
+ 
+                </div>
+            </div>
+            </section>
+            <section id="resume">
+                <h2>Resume</h2>
+              <!-- 1. Embedded PDF (fills most of the viewport) -->
+                <object
+                    data="LeonardoGonzalezResume.pdf"
+                    type="application/pdf"
+                    width="100%"
+                    height="800"
+                    aria-label="Leonardo Gonzalez Resume"
+                >
+                    <!-- 2. Fallback content for browsers that block embeds -->
+                    <p>
+                    Your browser can’t display PDFs. You can
+                    <a href="LeonardoGonzalezResume.pdf" download>
+                        download the resume&nbsp;here
+                    </a>.
+                    </p>
+                </object>
+
+            </section>
+            <section id="projects">
+                <h2>Projects</h2>
+
+
+            </section>
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>If you'd like to get in touch, feel free to use the form below or reach out via email or LinkedIn.</p>
+
+                <ul class="contact-list">
+                <li>Email: <a href="mailto:leo.gueorguiev@gmail.com">leo.gueorguiev@gmail.com</a></li>
+                <li>LinkedIn: <a href="https://linkedin.com/in/lgonza75" target="_blank">linkedin.com/in/lgonza75</a></li>
+                <li>GitHub: <a href="https://github.com/lgueorg85" target="_blank">github.com/lgueorg85</a></li>
+                </ul>
+
+                <form class="contact-form" action="https://formspree.io/f/mpwlyvny" method="POST">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+
+                <label for="message">Message</label>
+                <textarea name="message" id="message" rows="5" required></textarea>
+
+                <button type="submit">Send Message</button>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>
