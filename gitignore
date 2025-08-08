@@ -1,0 +1,10 @@
+# dependencies
+node_modules/
+
+# secrets
+.env
+
+# misc OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/

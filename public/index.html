@@ -6,8 +6,17 @@
         <title>Leonardo Gonzalez | Portfolio</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="icon" href="favicon.ico" />
+          <script type="importmap">
+        {
+            "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/"
+            }
+        }
+  </script>
     </head>
     <body>
+        <canvas id="bg"></canvas>
         <header>
             <div class="container">
                 <h1>Leonardo Gonzalez</h1>
@@ -26,30 +35,32 @@
         <div class="about-flex">
             <img src="images/Profile-Image.jpg" alt="Leonardo Gonzalez" class="about-img" />
 
-            <div class="about-text">
-                    <p>
-                    I am <strong>Leonardo Gonzalez</strong>, a May&nbsp;2025 graduate of the
-                    <em>University of Illinois at Urbana-Champaign</em> with a Bachelor of Science
-                    in Computer Engineering and a minor in Philosophy. My technical
-                    expertise spans C/C++, SystemVerilog, x86 assembly, Python, and Java,
-                    enabling me to tackle challenges from low-level hardware design to
-                    high-level software architecture.
-                    </p>
-                    
-                    <p>
-                    I’ll return to Boeing Test & Evaluation as a full-time Product Security
-                    Engineer at the end of 2025, deepening my focus on secure product
-                    development. Until then, I’m sharpening my full-stack web-dev skills,
-                    building projects that blend thoughtful design with a security-first
-                    backend.
-                    </p>
-                    
-                    <p>
-                    This mix of creative front-end work and hard-won cybersecurity
-                    experience lets me craft robust, user-friendly platforms while staying
-                    on the cutting edge of modern web tooling.
-                    </p>
- 
+            <div class = "text-card">
+                <div class="about-text">
+                        <p>
+                        I am <strong>Leonardo Gonzalez</strong>, a May&nbsp;2025 graduate of the
+                        <em>University of Illinois at Urbana-Champaign</em> with a Bachelor of Science
+                        in Computer Engineering and a minor in Philosophy. My technical
+                        expertise spans C/C++, SystemVerilog, x86 assembly, Python, and Java,
+                        enabling me to tackle challenges from low-level hardware design to
+                        high-level software architecture.
+                        </p>
+                        
+                        <p>
+                        I’ll return to Boeing Test & Evaluation as a full-time Product Security
+                        Engineer at the end of 2025, deepening my focus on secure product
+                        development. Until then, I’m sharpening mDy full-stack web-dev skills,
+                        building projects that blend thoughtful design with a security-first
+                        backend.
+                        </p>
+                        
+                        <p>
+                        This mix of creative front-end work and hard-won cybersecurity
+                        experience lets me craft robust, user-friendly platforms while staying
+                        on the cutting edge of modern web tooling.
+                        </p>
+    
+                    </div>
                 </div>
             </div>
             </section>
@@ -75,11 +86,14 @@
             </section>
             <section id="projects">
                 <h2>Projects</h2>
-
+                <div class = "text-card">
+                    <p>Currently still in construction</p>
+                </div>
 
             </section>
             <section id="contact">
                 <h2>Contact</h2>
+                <div class = "text-card">
                 <p>If you'd like to get in touch, feel free to use the form below or reach out via email or LinkedIn.</p>
 
                 <ul class="contact-list">
@@ -88,7 +102,7 @@
                 <li>GitHub: <a href="https://github.com/lgueorg85" target="_blank">github.com/lgueorg85</a></li>
                 </ul>
 
-                <form class="contact-form" action="https://formspree.io/f/mpwlyvny" method="POST">
+                <form id="contactForm" class="contact-form" method="post" novalidate>
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" required>
 
@@ -99,8 +113,14 @@
                 <textarea name="message" id="message" rows="5" required></textarea>
 
                 <button type="submit">Send Message</button>
+                <p id="formStatus"></p>
                 </form>
+                <script src="script.js"></script>
+                </div>
             </section>
         </main>
+        <!-- 1 ▸ load UMD build from a CDN → it creates a global `THREE` -->
+        <script type="module" src="/bg.js"></script>
+
     </body>
 </html>
