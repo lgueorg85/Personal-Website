@@ -8,7 +8,7 @@ const { body, validationResult } = require('express-validator');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
 app.use(express.json());
 
 const transporter = nodemailer.createTransport({
@@ -53,15 +53,11 @@ app.post(
   }
 );
 
-// ---------- fallback (choose ONE version) ----------
-// Version A – param that matches everything
-// app.get('/:catchAll(.*)', (_, res) =>
-//   res.sendFile(path.join(__dirname, 'public', 'index.html'))
-// );
+
 
 // Version B – middleware catch-all (simple & safe)
 app.use((req, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+  res.sendFile(path.join(__dirname, 'index.html'))
 );
 
 app.listen(PORT, () =>
