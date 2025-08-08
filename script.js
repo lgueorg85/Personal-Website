@@ -1,3 +1,4 @@
+//script.js
 // Smooth in-page scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', event => {
@@ -34,3 +35,28 @@ document.getElementById('contactForm').addEventListener('submit', async event =>
     status.textContent = 'Network error – please try again later.';
   }
 });
+
+const toggleBtn = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme');
+
+if (currentTheme === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  toggleBtn.textContent = '☀️ Light Mode';
+}
+
+toggleBtn.addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  if (isDark) {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'light');
+    toggleBtn.textContent = '🌙 Dark Mode';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    toggleBtn.textContent = '☀️ Light Mode';
+  }
+
+  // Notify bg.js to update
+  window.dispatchEvent(new Event('themeChange'));
+});
+

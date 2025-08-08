@@ -1,17 +1,36 @@
-/* ===============================================================
-  Leonardo Gonzalez – Portfolio
-  =============================================================== */
-
-/* -------------------- 1.  Design tokens ---------------------- */
+/* ============================================================
+  1. Design Tokens (CSS Variables)
+  ============================================================ */
 :root {
-  --clr-bg      : #f8f9fa;
-  --clr-white   : #fff;
-  --clr-text    : #212529;
-  --clr-primary : #0d6efd;
-  --radius      : 1rem;
+  /* Base Palette */
+  --clr-bg:         #f8f9fa;
+  --clr-card:       rgba(255,255,255,0.95); /* Light glass */
+  --clr-text:       #212529;
+  --clr-primary:    #9d69cb;
+  --clr-heading-bg: var(--clr-primary);
+  --clr-heading:    #fff;
+  --clr-header-bg:  rgba(255,255,255,0.88);
+  --clr-header-text:#212529;
+  --clr-h2:         #212529;
+  --clr-white:      #fff;
+  --radius:         1rem;
 }
 
-/* -------------------- 2.  Reset / base ----------------------- */
+/* Dark Theme Overrides */
+html[data-theme="dark"] {
+  --clr-bg:         #121212;
+  --clr-white:      #1e1e1e;
+  --clr-text:       #e9ecef;
+  --clr-primary:    #9d69cb;
+  --clr-card:       rgba(32,32,35,0.9);
+  --clr-h2:         #ffffff;
+  --clr-header-bg:  rgba(18,18,18,0.88);
+  --clr-header-text:#e9ecef;
+}
+
+/* ============================================================
+  2. Reset & Base Styles
+  ============================================================ */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,17 +46,21 @@ body {
   line-height: 1.6;
 }
 
-/* -------------------- 3.  Typography ------------------------- */
+/* ============================================================
+  3. Typography
+  ============================================================ */
 h2 {
   font-size: 1.25rem;
   margin-bottom: .75rem;
-  color: rgba(250,250,252,.95);
+  color: var(--clr-h2);
 }
 section p + p {
   margin-top: 1.25rem;
 }
 
-/* -------------------- 4.  Generic layout --------------------- */
+/* ============================================================
+  4. Layout & Containers
+  ============================================================ */
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -52,18 +75,24 @@ section {
   padding: 0 1rem;
 }
 
-/* -------------------- 5.  Header ----------------------------- */
+/* ============================================================
+  5. Header
+  ============================================================ */
 header {
   position: sticky;
   top: 0;
   z-index: 2;
-  background: rgba(255,255,255,.88);
+  background: var(--clr-header-bg);
+  color: var(--clr-header-text);
   backdrop-filter: blur(6px);
   box-shadow: 0 2px 6px rgba(0,0,0,.04);
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
+header h1,
 header nav a {
-  color: #4a4a4a;
+  color: var(--clr-header-text);
+}
+header nav a {
   font-weight: 500;
   margin-left: 1.5rem;
   text-decoration: none;
@@ -73,7 +102,7 @@ header nav a:hover {
   color: var(--clr-primary);
 }
 
-/* Header responsive */
+/* Header Responsive */
 @media (max-width: 600px) {
   header {
    padding: .75rem 0;
@@ -83,7 +112,6 @@ header nav a:hover {
    margin-right: 1rem;
   }
 }
-/* iPhone-SE safeguard */
 @media (max-width: 350px) {
   header {
    padding: .55rem 0;
@@ -93,7 +121,9 @@ header nav a:hover {
   }
 }
 
-/* -------------------- 6.  Footer ----------------------------- */
+/* ============================================================
+  6. Footer
+  ============================================================ */
 footer {
   background: var(--clr-white);
   color: #6c757d;
@@ -104,7 +134,9 @@ footer {
   box-shadow: 0 2px 4px rgba(0,0,0,.05);
 }
 
-/* -------------------- 7.  Cards & grids ---------------------- */
+/* ============================================================
+  7. Cards & Grids
+  ============================================================ */
 .grid {
   display: grid;
   gap: 1.5rem;
@@ -115,7 +147,7 @@ footer {
   }
 }
 .card {
-  background: var(--clr-white);
+  background: var(--clr-card);
   border-radius: var(--radius);
   padding: 1.5rem;
   box-shadow: 0 2px 6px rgba(0,0,0,.06);
@@ -126,10 +158,12 @@ footer {
   box-shadow: 0 4px 12px rgba(0,0,0,.08);
 }
 
-/* -------------------- 8.  Floating “glass” text cards -------- */
+/* ============================================================
+  8. Floating “Glass” Text Cards
+  ============================================================ */
 .text-card {
-  background: rgba(250,250,252,.95);
-  backdrop-filter: blur(4px);
+  background: var(--clr-card);
+  backdrop-filter: blur(1px);
   padding: 1.5rem 2rem;
   border-radius: var(--radius);
   box-shadow: 0 4px 14px rgba(0,0,0,.06);
@@ -139,8 +173,15 @@ footer {
    padding: 1.25rem;
   }
 }
+/* About section: extra solid background, no blur */
+#about .text-card {
+  background: var(--clr-card);
+  backdrop-filter: none;
+}
 
-/* -------------------- 9.  About section ---------------------- */
+/* ============================================================
+  9. About Section
+  ============================================================ */
 .about-flex {
   display: flex;
   flex-direction: column;
@@ -163,14 +204,16 @@ footer {
   }
 }
 
-/* -------------------- 10.  Resume section -------------------- */
+/* ============================================================
+  10. Resume Section
+  ============================================================ */
 #resume {
   margin-bottom: 4rem;
 }
-/* default (desktop) – show embed, hide button */
+/* Desktop: show embed, hide button */
 .resume-embed {
   width: 100%;
-  height: calc(100vh - 12rem); /* fills screen, minus header */
+  height: calc(100vh - 12rem);
   border: 1px solid #d9d9d9;
   border-radius: .5rem;
   overflow: hidden;
@@ -178,7 +221,7 @@ footer {
 .resume-download {
   display: none;
 }
-/* phones / small tablets */
+/* Mobile: hide embed, show button */
 @media (max-width: 768px) {
   .resume-embed {
    display: none;
@@ -193,7 +236,9 @@ footer {
   }
 }
 
-/* -------------------- 11.  Contact section ------------------- */
+/* ============================================================
+  11. Contact Section
+  ============================================================ */
 .contact-list {
   list-style: none;
   margin: 1rem 0 2rem;
@@ -225,9 +270,9 @@ footer {
   transition: background .2s;
 }
 .contact-form button:hover {
-  background: #0b5ed7;
+  background: #9d69cb;
 }
-/* inline feedback */
+/* Inline feedback */
 #formStatus {
   margin-top: .75rem;
   font-weight: 600;
@@ -237,7 +282,9 @@ footer {
   color: #d9534f;
 }
 
-/* -------------------- 12.  Utilities ------------------------- */
+/* ============================================================
+  12. Utilities
+  ============================================================ */
 .btn {
   display: inline-block;
   background: var(--clr-primary);
@@ -249,9 +296,8 @@ footer {
   transition: background .2s;
 }
 .btn:hover {
-  background: #0b5ed7;
+  background: #9c77bd;;
 }
-
 .contact-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -259,7 +305,7 @@ footer {
   margin-bottom: 2rem;
 }
 .contact-btn {
-  background-color: #343a40; /* dark mode gray */
+  background-color: #343a40;
   font-size: 0.95rem;
 }
 .contact-btn:hover {
@@ -271,7 +317,6 @@ footer {
    align-items: center;
   }
 }
-
 .centered {
   display: flex;
   justify-content: center;
@@ -279,8 +324,10 @@ footer {
   text-align: center;
 }
 
-/* -------------------- 13.  Miscellaneous --------------------- */
-/* full-viewport canvas for three.js background */
+/* ============================================================
+  13. Miscellaneous
+  ============================================================ */
+/* Full-viewport canvas for three.js background */
 #bg {
   position: fixed;
   inset: 0;
@@ -294,7 +341,7 @@ header, main, footer {
   position: relative;
   z-index: 1;
 }
-/* embedded objects (e.g. PDF) */
+/* Embedded objects (e.g. PDF) */
 object {
   border: 1px solid #ccc;
   border-radius: .5rem;
