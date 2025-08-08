@@ -1,31 +1,36 @@
-// smooth in-page scrolling
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    document.querySelector(a.getAttribute('href'))
-            .scrollIntoView({behavior:'smooth'});
+// Smooth in-page scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', event => {
+    event.preventDefault();
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
   });
 });
 
-document.getElementById('contactForm').addEventListener('submit', async (e)=>{
-  e.preventDefault();                      // stay on the page
-  const form   = e.target;
+// Contact form submission handler
+document.getElementById('contactForm').addEventListener('submit', async event => {
+  event.preventDefault(); // Stay on the page
+
+  const form   = event.target;
   const data   = Object.fromEntries(new FormData(form));
   const status = document.getElementById('formStatus');
 
-  try{
-    const r   = await fetch(form.action, {
-      method : 'POST',
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
       headers: { 'Accept': 'application/json' },
-      body   : JSON.stringify(data)
+      body: JSON.stringify(data)
     });
-    if(r.ok){
+
+    if (response.ok) {
       status.textContent = 'Thanks! Message sent 👍';
       form.reset();
-    }else{
+    } else {
       status.textContent = 'Hmm… something went wrong.';
     }
-  }catch{
+  } catch {
     status.textContent = 'Network error – please try again later.';
   }
 });
