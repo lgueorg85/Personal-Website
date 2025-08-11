@@ -14,7 +14,23 @@
   --clr-h2:         #212529;
   --clr-white:      #fff;
   --radius:         1rem;
+  --switch-w: 118px;
+  --switch-h: 46px;
+  --switch-pad: 6px;
+  --sun-size: 20px;
+  --bg-color-light: #f0f0e8;
+  --bg-color-dark:  #1c2135;
+  --border-color-light: #1c2135;
+  --border-color-dark:  #f0f0e8;
+  --sun-color:   #fabc1c;
+  --moon-color:  #fffdf2;
+  --day-bg-color:   #0dbdf6;
+  --night-bg-color: #272a30;
+  --cloud-color: #fffdf2;
+  --star-color:  #fffdf2;
+  --switch-stroke: 2px;
 }
+
 
 /* Dark Theme Overrides */
 html[data-theme="dark"] {
@@ -347,3 +363,103 @@ object {
   border-radius: .5rem;
   margin-top: 1rem;
 }
+
+
+
+/* button footprint */
+/* button footprint */
+.theme-switcher-grid {
+  width: var(--switch-w);
+  height: var(--switch-h);
+  padding: var(--switch-pad);
+  display: grid;
+  grid-template-columns: repeat(54, 1fr); /* scale with button */
+  grid-template-rows: repeat(24, 1fr);
+  border-radius: calc(var(--switch-h) / 2);
+  background: var(--day-bg-color);
+  /* border: 1.5px solid var(--switch-border-light); */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden; /* keep balls/stars inside pill */
+  line-height: 0;   /* remove inline baseline wiggle */
+}
+.theme-switcher-grid { border: 0; box-shadow: inset 0 0 0 2px var(--switch-border-light); }
+.theme-switcher-grid.night-theme { box-shadow: inset 0 0 0 2px var(--switch-border-dark); }
+
+
+
+.theme-switcher-grid.night-theme{
+  background-color: var(--night-bg-color);
+  border-color: var(--border-color-dark);
+}
+header .theme-switcher-grid{ margin-left: 12px; }
+
+/* Sun / Moon */
+.sun{
+  grid-column: 4 / 22;
+  grid-row:    4 / 22;
+  width: 100%;
+  height: 100%;            /* no fixed 20px -> centers correctly */
+  border-radius: 50%;
+  background: var(--sun-color);
+  transition: grid-column 1s ease, background-color 1s ease;
+}
+
+.theme-switcher-grid.night-theme .sun{
+  grid-column: 33 / 51;
+  background-color: var(--moon-color);
+}
+
+/* The crescent cutout — sits on top of the sun */
+.moon-overlay{
+  grid-column: 38 / 50;
+  grid-row:    6  / 18;
+  border-radius: 50%;
+  background: var(--day-bg-color);
+  opacity: 0;              /* hidden in day */
+  transition: opacity 1s ease, background-color 1s ease;
+  z-index: 1;
+}
+
+.theme-switcher-grid.night-theme .moon-overlay{
+  background: var(--night-bg-color);
+  opacity: 1;
+}
+
+/* Clouds (day) -> tiny dots (night) */
+.cloud-ball{
+  --d: calc(var(--switch-h) * .22);
+  width: var(--d); height: var(--d);
+  border-radius: 50%;
+  background: var(--cloud-color);
+  transition: all 1s ease;
+  z-index: 2;
+}
+#ball1{ grid-column: 12/15; grid-row: 11/14; }
+#ball2{ grid-column: 16/19; grid-row: 11/14; }
+#ball3{ grid-column: 20/23; grid-row: 11/14; }
+#ball4{ grid-column: 15/18; grid-row:  8/11; }
+
+.theme-switcher-grid.night-theme #ball1,
+.theme-switcher-grid.night-theme #ball2,
+.theme-switcher-grid.night-theme #ball3,
+.theme-switcher-grid.night-theme #ball4{
+  width: 2px; height: 2px; background: var(--star-color);
+}
+
+
+/* Stars (night) */
+.star{
+  width: 2px; height: 2px; border-radius: 50%;
+  background: var(--star-color);
+  opacity: 0; transition: opacity 1s ease;
+}
+#star1{ grid-column: 27/28; grid-row:  6/7; }
+#star2{ grid-column: 31/32; grid-row: 11/12; }
+#star3{ grid-column: 38/39; grid-row:  8/9; }
+#star4{ grid-column: 42/43; grid-row: 15/16; }
+
+.theme-switcher-grid.night-theme .star{ opacity: 1; }
+
+
+

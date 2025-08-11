@@ -1,62 +1,89 @@
-//script.js
-// Smooth in-page scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', event => {
-    event.preventDefault();
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (target) {
+// script.js
+document.addEventListener('DOMContentLoaded', () => {
+  /* =========================
+     Smooth in-page scrolling
+     ========================= */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      const href = anchor.getAttribute('href');
+      const target = href && document.querySelector(href);
+      if (!target) return; // let browser handle if no target
+      e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-});
-
-// Contact form submission handler
-document.getElementById('contactForm').addEventListener('submit', async event => {
-  event.preventDefault(); // Stay on the page
-
-  const form   = event.target;
-  const data   = Object.fromEntries(new FormData(form));
-  const status = document.getElementById('formStatus');
-
-  try {
-    const response = await fetch(form.action, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: JSON.stringify(data)
     });
+  });
 
-    if (response.ok) {
-      status.textContent = 'Thanks! Message sent 👍';
-      form.reset();
+  /* =========================
+     Contact form (AJAX, no redirect)
+     ========================= */
+  const form = document.getElementById('contactForm');
+  if (form) {
+    const status = document.getElementById('formStatus');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(form));
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        if (res.ok) {
+          if (status) status.textContent = 'Thanks! Message sent 👍';
+          form.reset();
+        } else {
+          if (status) status.textContent = 'Hmm… something went wrong.';
+        }
+      } catch {
+        if (status) status.textContent = 'Network error – please try again later.';
+      }
+    });
+  }
+
+  /* =========================
+     Fancy theme switcher button
+     Controls: html[data-theme="dark"]
+     ========================= */
+  const switcher = document.getElementById('theme-switcher-grid');
+  
+  if (switcher) {
+    // Determine starting theme (saved > system preference)
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const startDark = saved ? saved === 'dark' : prefersDark;
+
+    if (startDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      switcher.classList.add('night-theme');
+      switcher.setAttribute('aria-pressed', 'true');
+      window.dispatchEvent(new Event('themeChange')); // sync bg.js
     } else {
-      status.textContent = 'Hmm… something went wrong.';
+      switcher.setAttribute('aria-pressed', 'false');
     }
-  } catch {
-    status.textContent = 'Network error – please try again later.';
+
+    // Toggle on click
+    switcher.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        switcher.classList.remove('night-theme');
+        switcher.setAttribute('aria-pressed', 'false');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        switcher.classList.add('night-theme');
+        switcher.setAttribute('aria-pressed', 'true');
+      }
+
+      // Let bg.js re-pull CSS variables for fog/mesh colors
+      window.dispatchEvent(new Event('themeChange'));
+    });
   }
-});
-
-const toggleBtn = document.getElementById('theme-toggle');
-const currentTheme = localStorage.getItem('theme');
-
-if (currentTheme === 'dark') {
-  document.documentElement.setAttribute('data-theme', 'dark');
-  toggleBtn.textContent = '☀️ Light Mode';
-}
-
-toggleBtn.addEventListener('click', () => {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  if (isDark) {
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('theme', 'light');
-    toggleBtn.textContent = '🌙 Dark Mode';
-  } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('theme', 'dark');
-    toggleBtn.textContent = '☀️ Light Mode';
-  }
-
-  // Notify bg.js to update
-  window.dispatchEvent(new Event('themeChange'));
 });
 
